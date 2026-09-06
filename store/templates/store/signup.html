@@ -1,0 +1,654 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Qatar Airways - Signup</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER - QATAR WHITE STYLE ===== */
+        header {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e8e8e8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .logo-image {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #222222;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            transition: color 0.2s;
+        }
+
+        nav ul li a:hover {
+            color: #8b1c1c;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-shrink: 0;
+        }
+
+        .language-select {
+            color: #222222;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+
+        .header-login-btn {
+            background: transparent;
+            color: #222222;
+            border: 1px solid #cccccc;
+            padding: 6px 18px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .header-login-btn:hover {
+            border-color: #8b1c1c;
+            color: #8b1c1c;
+        }
+
+        .header-login-btn.primary {
+            background: #8b1c1c;
+            border-color: #8b1c1c;
+            color: #ffffff;
+        }
+
+        .header-login-btn.primary:hover {
+            background: #a82222;
+            border-color: #a82222;
+            color: #ffffff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #222222;
+            padding: 4px 8px;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            position: relative;
+            background-image: url('https://dmassets.qatarairways.com/adobe/assets/urn:aaid:aem:21c2f78d-4828-44f7-8bfc-7ad75e3a5aec/as/m-sep-2026-grsp-new-york.jpg?quality=95&smartcrop=m-h');
+            background-size: cover;
+            background-position: center 30%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px 20px;
+            position: relative;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+            pointer-events: none;
+        }
+
+        .unified-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            text-align: left;
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-eyebrow {
+            color: #8b1c1c;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .unified-card h1 {
+            color: #1a1a2e;
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .hero-desc {
+            color: #555555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .error-message {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            background: #ffffff;
+            color: #333;
+            -webkit-appearance: none;
+            appearance: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #8b1c1c;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #8b1c1c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 20px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .submit-btn:hover {
+            background-color: #a82222;
+        }
+
+        .submit-btn:active {
+            background-color: #6e1515;
+        }
+
+        .switch-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555555;
+            text-align: center;
+        }
+
+        .switch-link a {
+            color: #8b1c1c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== FOOTER - QATAR STYLE ===== */
+        .site-footer {
+            background-color: #0a1628;
+            color: #ffffff;
+            padding: 50px 60px 30px 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-bottom-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-bottom-left .footer-logo-small {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .footer-bottom-left span {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .footer-social a:hover {
+            color: #ffffff;
+        }
+
+        .footer-award {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+        }
+
+        .footer-award .award-badge {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            header { padding: 12px 30px; }
+            .footer-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 900px) {
+            header { padding: 10px 20px; }
+            nav ul { gap: 16px; }
+            nav ul li a { font-size: 12px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+            }
+
+            .logo-image { height: 30px; }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                border-bottom: 1px solid #e8e8e8;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                z-index: 1000;
+            }
+            nav.nav-active { display: block; }
+            nav ul {
+                flex-direction: column;
+                gap: 12px;
+                align-items: center;
+                padding: 0;
+            }
+            nav ul li a { 
+                font-size: 14px;
+                color: #222222;
+            }
+
+            .menu-toggle { display: block; }
+
+            .header-right {
+                gap: 10px;
+            }
+
+            .language-select { font-size: 12px; }
+            .header-login-btn {
+                font-size: 11px;
+                padding: 5px 12px;
+            }
+
+            .hero-section {
+                padding: 80px 16px 30px 16px;
+                min-height: 100vh;
+            }
+
+            .unified-card {
+                padding: 28px 20px;
+            }
+            .unified-card h1 {
+                font-size: 28px;
+            }
+            .hero-desc {
+                font-size: 13px;
+            }
+
+            .input-group input {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .submit-btn {
+                font-size: 15px;
+                padding: 14px;
+            }
+
+            .site-footer {
+                padding: 30px 16px 20px 16px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-bottom-left {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-award {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 8px 12px; }
+            .logo-image { height: 26px; }
+            .header-right { gap: 6px; }
+            .language-select { font-size: 11px; }
+            .header-login-btn {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+            .menu-toggle { font-size: 20px; }
+
+            .unified-card { padding: 20px 16px; }
+            .unified-card h1 { font-size: 24px; }
+            .hero-desc { font-size: 12px; }
+
+            .input-group input {
+                font-size: 15px;
+                padding: 10px 12px;
+            }
+
+            .submit-btn {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .switch-link { font-size: 13px; }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .footer-col h4 {
+                font-size: 13px;
+                margin-bottom: 10px;
+            }
+            .footer-col ul li a {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER - WHITE QATAR STYLE ===== -->
+    <header>
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'store/img/qatar2.png' %}" alt="Qatar Airways Logo" class="logo-image">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'how_it_works' %}">How it works</a></li>
+                <li><a href="{% url 'air_passenger_rights' %}">Your rights</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Partnership</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <div class="language-select">EN</div>
+            <a href="{% url 'login' %}" class="header-login-btn">Log in</a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-section">
+        <div class="unified-card">
+            <div class="hero-eyebrow">Flight rights & compensation</div>
+            <h1>Create Account</h1>
+            <p class="hero-desc">Sign up to submit your compensation claims and track their review status seamlessly.</p>
+
+            {% if messages %}
+                {% for message in messages %}
+                <div class="error-message" style="{% if message.tags == 'success' %}background-color: rgba(34, 197, 94, 0.1); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.2);{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Signup</button>
+            </form>
+
+            <p class="switch-link">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>About us</h4>
+                <ul>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press releases</a></li>
+                    <li><a href="#">Sponsorship</a></li>
+                    <li><a href="#">Annual reports</a></li>
+                    <li><a href="#">Environmental sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Group companies</h4>
+                <ul>
+                    <li><a href="#">Hamad International Airport</a></li>
+                    <li><a href="#">Qatar Executive</a></li>
+                    <li><a href="#">Qatar Duty Free</a></li>
+                    <li><a href="#">Qatar Airways Cargo</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Business solutions</h4>
+                <ul>
+                    <li><a href="#">Corporate travel</a></li>
+                    <li><a href="#">Beyond Business</a></li>
+                    <li><a href="#">MICE meetings and events</a></li>
+                    <li><a href="#">Advertise with us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Business partners</h4>
+                <ul>
+                    <li><a href="#">Affiliate marketing</a></li>
+                    <li><a href="#">e-Procurement</a></li>
+                    <li><a href="#">Trade partners</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Help</h4>
+                <ul>
+                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#">Browse FAQs</a></li>
+                    <li><a href="#">Travel alerts</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <img src="{% static 'store/img/qatar2.png' %}" alt="Qatar Airways" class="footer-logo-small">
+                <span>&copy; 2026 Qatar Airways. All rights reserved.</span>
+            </div>
+            <div class="footer-award">
+                <span>World's Best Business Class</span>
+                <span class="award-badge">★ Five more awards</span>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook">📘</a>
+                <a href="#" aria-label="Twitter">🐦</a>
+                <a href="#" aria-label="Instagram">📸</a>
+                <a href="#" aria-label="YouTube">▶️</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav');
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('nav-active');
+            });
+        }
+    </script>
+
+</body>
+</html>
